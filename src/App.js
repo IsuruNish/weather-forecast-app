@@ -71,7 +71,7 @@ function App() {
                 {data.main ? (
                   <span className="badge p-3" style={{ backgroundColor: "rgba(131, 131, 131, 0.562)" }}>
                     <h1 className="display-1 fw-bold" style={{ fontSize: "80px" }}>
-                      {data.main.temp.toFixed()} °F
+                      {(data.main.temp - 273.15).toFixed()} °C
                     </h1>
                   </span>
                 ) : null}
@@ -93,7 +93,7 @@ function App() {
                 <div className="card-body">
                   <div className="row centerDiv">
                     <div className="col-3 mt-3">
-                      <h5 className="card-title"> {data.main ? <h1>{data.main.feels_like.toFixed()} °F</h1> : null}</h5>
+                      <h5 className="card-title"> {data.main ? <h1>{(data.main.feels_like - 273.15).toFixed()} °C</h1> : null}</h5>
                       <h6 className="card-subtitle mb-2 text-muted">Feels Like</h6>
                     </div>
 
