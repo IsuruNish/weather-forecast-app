@@ -1,44 +1,93 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
 function App() {
   const [data, setData] = useState({});
-  const [location, setLocation] = useState("");
-  // const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=9d98d05b9005fbf9533b9d30bb3fc292`;
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=colombo&appid=9d98d05b9005fbf9533b9d30bb3fc292`;
+  const inputRef = useRef(null);
 
-  const searchLoocation = () => {
-    axios.get(url).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
+  const searchLocation = () => {
+    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + inputRef.current.value + "&appid=9d98d05b9005fbf9533b9d30bb3fc292";
 
-    setLocation("");
+    if (inputRef.current.value != "") {
+      axios
+        .get(url)
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((res) => {
+          setData(res.data);
+        });
+    }
+    inputRef.current.value = "";
   };
 
   return (
     <div className="bodyHeight">
       <div className="container pt-5">
         <div className="row centerDiv">
-          <div className="col-3">
-            <input type="email" className="form-control" placeholder="Enter city name" />
+          <div className="col-3 ">
+            <input type="email" className="form-control" placeholder="Enter city name" ref={inputRef} />
           </div>
 
-          <div className="col-2">
-            <button type="button" class="btn btn-primary btn" onClick={searchLoocation}>
+          <div className="col-1">
+            <button type="button" className="btn btn-primary btn" onClick={searchLocation}>
               Search
             </button>
           </div>
         </div>
 
-        <h1> {data.name} </h1>
-        {data.main ? <h1>{data.main.temp.toFixed()} °F</h1> : null}
-        {data.weather ? <h1>{data.weather[0].main}</h1> : null}
-        {data.main ? <h1>{data.main.feels_like.toFixed()} °F</h1> : null}
-        {data.main ? <h1>{data.main.humidity} %</h1> : null}
-        {data.wind ? <h1>{data.wind.speed.toFixed()} MPH</h1> : null}
+        <div className="row centerDiv mt-5">
+          <div className="col-3 centerDiv">
+            <h1 className="display-4">{data.name}</h1>
+          </div>
+        </div>
+
+        <div className="row centerDiv">
+          <div className="col-3 mt-4 centerDiv">
+            {data.main ? (
+              <span className="badge p-3" style={{ backgroundColor: "rgba(131, 131, 131, 0.562)" }}>
+                <h1 className="display-1 fw-bold" style={{ fontSize: "80px" }}>
+                  {data.main.temp.toFixed()} °F
+                </h1>
+              </span>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="row centerDiv">
+          <div className="col-3 mt-4 centerDiv">
+            {data.main ? (
+              <h1 className="display-1 fw-bold" style={{ fontSize: "80px" }}>
+                {data.weather ? <h1>{data.weather[0].main}</h1> : null}
+              </h1>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="centerDiv ">
+          <div className="card shadow p-3 mb-5 bg-body rounded" style={{ width: " 45rem", marginTop: "2.9rem" }}>
+            <div className="card-body">
+              <div className="row centerDiv">
+                <div className="col-3 mt-3">
+                  <h5 className="card-title"> {data.main ? <h1>{data.main.feels_like.toFixed()} °F</h1> : null}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">Feels Like</h6>
+                </div>
+
+                <div className="col-3 mt-3">
+                  <h5 className="card-title"> {data.main ? <h1>{data.main.humidity} %</h1> : null}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">Humidity</h6>
+                </div>
+
+                <div className="col-3 mt-3">
+                  <h5 className="card-title"> {data.wind ? <h1>{data.wind.speed.toFixed()} MPH</h1> : null}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">Wind Speed</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
