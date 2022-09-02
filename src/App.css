@@ -11,3 +11,12 @@
   justify-content: center;
   /* color: rgba(131, 131, 131, 0.562); */
 }
+
+.svgImg {
+  display: flex;
+  justify-content: center;
+}
+
+.start {
+  margin-top: 15rem;
+}
