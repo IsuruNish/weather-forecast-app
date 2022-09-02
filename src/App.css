@@ -1,0 +1,12 @@
+.bodyHeight {
+  max-height: 100vh;
+  height: 100vh;
+  background-image: url("../assets/weather.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.centerDiv {
+  display: flex;
+  justify-content: center;
+}
