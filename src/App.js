@@ -4,9 +4,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { Alert } from "react-bootstrap";
 
-import svgPic from "./nocity.svg";
-import svgFind from "./find.svg";
-
 function App() {
   const [data, setData] = useState({});
   const [success, setSuccess] = useState(0);
